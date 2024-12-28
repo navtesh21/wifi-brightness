@@ -46,3 +46,8 @@ fun GreetingPreview() {
         WifiManagerScreen()
     }
 }
+@Preview(showBackground = true)
+@Composable
+fun MainAppPreview() {
+    MainApp()
+}
