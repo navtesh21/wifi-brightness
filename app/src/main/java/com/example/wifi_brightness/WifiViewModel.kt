@@ -1,6 +1,8 @@
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.audiofx.BassBoost
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -8,6 +10,7 @@ import android.net.NetworkRequest
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSpecifier
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
@@ -210,8 +213,11 @@ class WifiViewModel(private val context: Context) : ViewModel() {
         return wifiManager.isWifiEnabled
     }
 
-    fun enableWifi() {
-        if (!wifiManager.isWifiEnabled) {
+    fun enableWifi(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val panelIntent = Intent(Settings.Panel.ACTION_WIFI)
+            context.startActivity(panelIntent)
+        } else {
             @Suppress("DEPRECATION")
             wifiManager.isWifiEnabled = true
         }
